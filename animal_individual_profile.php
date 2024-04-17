@@ -94,15 +94,21 @@ if (isset($_GET['petID'])) {
 
                         // AJAX request to handle like action
                         $.ajax({
-                            url: 'animal_pic_react.php', // URL of the PHP script
+                            url: 'temp_react.php', // URL of the PHP script
                             type: 'POST', // HTTP method
                             data: { petID: petId, action: action }, // Data to be sent to the server
-                            success: function(response) { // Callback function to handle successful response
-                                $('#likeCount').text(response); // Update the like count element with the response
-                            },
-                            error: function(xhr, status, error) { // Callback function to handle error response
-                                console.error(xhr.responseText); // Log the error message
-                            }
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#LikeCount').text(response.likes);
+                                }
+                                else {
+                                    console.error(response.message);
+                                }
+                                },
+                                error: function(xhr, status, error) { // Callback function to handle error response
+                                    console.error(xhr.responseText); // Log the error message
+                                }
                         });
                     });
 
