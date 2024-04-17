@@ -1,0 +1,14 @@
+/* Login Reference */
+.login-reference {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-reference a {
+    color: #4caf50; /* Green color for the link */
+    text-decoration: none;
+}
+
+.login-reference a:hover {
+    text-decoration: underline; /* Underline the link on hover */
+}
