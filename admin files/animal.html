@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submission Approval</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".hamburger").click(function(){
+              $(".wrapper").toggleClass("active")
+            });
+
+            $(".approve_btn").click(function(){
+                // Remove only the buttons from the row
+                $(this).siblings('.reject_btn').remove();
+                $(this).remove();
+            });
+
+            $(".reject_btn").click(function(){
+                // Remove the entire row
+                $(this).closest("tr").remove();
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="top_navbar">
+            <div class="logo">
+                <a href="#">West Neko to Inu</a>
+            </div>
+            <div class="top_menu">
+                <div class="right_info">
+                    <div class="icon_wrap">
+                        <div class="icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                    </div>
+                    <div class="icon_wrap dropdown">
+                      <div class="icon" id="dropdownMenu">
+                          <i class="fas fa-cog"></i>
+                      </div>
+                      <div class="dropdown-content">
+                          <a href="adminprofile.html">View Profile</a>
+                          <a href="#">Log Out</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="main_body">
+        
+        <div class="sidebar_menu">
+            <div class="inner__sidebar_menu">
+                
+                <ul>
+                  <li>
+                    <a href="admin.html">
+                      <span class="icon">
+                        <i class="fas fa-border-all"></i></span>
+                      <span class="list">Main</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <span class="icon"><i class="fas fa-chart-pie"></i></span>
+                      <span class="list">Charts</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="animal.html" class="active">
+                        <span class="icon"><i class="fas fa-file-invoice"></i></span>
+                        <span class="list">Animal Submissions</span>
+                    </a>
+                  <li>
+                    <a href="user.html">
+                      <span class="icon"><i class="fas fa-duotone fa-users"></i></span>
+                      <span class="list">User Approval</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="profile.html">
+                      <span class="icon"><i class="fas fa-solid fa-paw"></i></span>
+                      <span class="list">Animal Profiles</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="posts.html">
+                      <span class="icon"><i class="fas fa-solid fa-pen"></i></span>
+                      <span class="list">Content</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="hamburger">
+                    <div class="inner_hamburger">
+                        <span class="arrow">
+                            <i class="fas fa-long-arrow-alt-left"></i>
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="animal_container">
+            <div class="item_wrap">
+                <div class="item">
+                    <h2>Animal Submissions</h2>
+                    <div class="scrollable-table">
+                        <table id="animalTable">
+                            <thead>
+                                <tr>
+                                <th><h3>Animal Type</h3></th>
+                                <th><h3>Animal Name</h3></th>
+                                <th><h3>Description</h3></th>
+                                <th><h3>Photo</h3></th>
+                                <th><h3>Actions</h3></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                  <td>Cat</td>
+                                  <td>Whiskers</td>
+                                  <td>Whiskers is a playful and friendly tabby cat who loves to cuddle.</td>
+                                  <td><img src="cat.jpg" alt="Whiskers"></td>
+                                  <td>
+                                      <button class="approve_btn">Approve</button>
+                                      <button class="reject_btn">Reject</button>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>Dog</td>
+                                  <td>Rex</td>
+                                  <td>Rex is a loyal and energetic golden retriever who enjoys playing fetch.</td>
+                                  <td><img src="rex.jpg" alt="Rex"></td>
+                                  <td>
+                                      <button class="approve_btn">Approve</button>
+                                      <button class="reject_btn">Reject</button>
+                                  </td>
+                              </tr>
+                              <!-- Add more rows as needed -->
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
