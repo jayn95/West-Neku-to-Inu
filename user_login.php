@@ -11,11 +11,11 @@
     <div class="navBar">
         <nav> 
             <ul class="navContents">
-                <li><a href="#">Home</a></li>
+                <li><a href="temporary_post.php">Home</a></li>
                 <li><a href="user_signup.php">Sign Up</a></li>
                 <li><a href="animal_view_profile.php">Animals</a></li>
                 <li><a href="animal_index.php">Add Animal</a></li>
-                <li><a href="#">Forum</a></li>
+                <li><a href="forumshtml.php">Forum</a></li>
                 <li><a href="#">About us</a></li>
             </ul>
         </nav>
@@ -25,7 +25,7 @@
         <div class="header">
             <h2>User Login</h2>
         </div>
-        <form method="post" action="confirmed.html">
+        <form method="post" action="temp_post_v2.php">
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="username">
@@ -41,7 +41,7 @@
     </div>
 
 <?php
-
+session_start();
 include('server.php');
 
 if (isset($_POST['user_login'])) {
@@ -54,17 +54,22 @@ if (isset($_POST['user_login'])) {
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
+            // Store user information in session
+            $_SESSION['userID'] = $row['userID'];
             $_SESSION['username'] = $username;
-            header('Location: confirmed.html');
+            $_SESSION['first_name'] = $row['first_name']; // Store the user's first name in session
+            header('Location: temp_post_v2.php');
             exit();
         } else {
-            array_push($errors, "Wrong username or password");
+            echo "Wrong username or password"; // Consider adding error handling to display errors on the page
         }
     } else {
-        array_push($errors, "Wrong username or password");
+        echo "Wrong username or password"; // Consider adding error handling to display errors on the page
     }
 }
 ?>
+
+
 
 </body>
 </html>
