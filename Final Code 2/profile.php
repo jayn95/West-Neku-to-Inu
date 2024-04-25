@@ -147,7 +147,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="animal.html">
+                  <a href="animal.php">
                       <span class="icon"><i class="fas fa-file-invoice"></i></span>
                       <span class="list">Animal Submissions</span>
                   </a>
