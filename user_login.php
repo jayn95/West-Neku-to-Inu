@@ -1,3 +1,34 @@
+<?php
+$username = $err_msg = "";
+
+include "cfg/db_conn.php";
+include "header.php";
+if (isset($_POST['user_login'])){
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+    // $password = md5($_POST['password']);
+
+    $sql = "SELECT * from user_account where username = ? and password = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("ss", $username, $password);
+      if( $stmt->execute() ){
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['image_prof'] = $row['image_prof'];
+            header("location:temporary_post.php");
+
+        }
+        else {
+            $err_msg = "Invalid username/password";
+        }
+    }
+    else {
+        $err_msg = "Some error occurred"; 
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,28 +38,16 @@
     <link rel="stylesheet" href="design/design.css">
 </head>
 <body>
-    <!-- NAVIGATION BAR -->
-    <div class="navBar">
-        <nav> 
-            <ul class="navContents">
-                <li><a href="temporary_post.php">Home</a></li>
-                <li><a href="user_signup.php">Sign Up</a></li>
-                <li><a href="animal_view_profile.php">Animals</a></li>
-                <li><a href="animal_index.php">Add Animal</a></li>
-                <li><a href="forumshtml.php">Forum</a></li>
-                <li><a href="#">About us</a></li>
-            </ul>
-        </nav>
-    </div>
     <!-- ADMIN LOGIN -->
     <div class="container">
         <div class="header">
             <h2>User Login</h2>
         </div>
-        <form method="post" action="temp_post_v2.php">
+        <form method="post" action="user_login.php">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username">
+                <input type="text" name="username"
+                placeholder = "Enter you Username" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
@@ -39,37 +58,6 @@
             </div>
         </form>
     </div>
-
-<?php
-session_start();
-include('server.php');
-
-if (isset($_POST['user_login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $query = "SELECT * FROM user_account WHERE username='$username'";
-    $result = $db->query($query);
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            // Store user information in session
-            $_SESSION['userID'] = $row['userID'];
-            $_SESSION['username'] = $username;
-            $_SESSION['first_name'] = $row['first_name']; // Store the user's first name in session
-            header('Location: temp_post_v2.php');
-            exit();
-        } else {
-            echo "Wrong username or password"; // Consider adding error handling to display errors on the page
-        }
-    } else {
-        echo "Wrong username or password"; // Consider adding error handling to display errors on the page
-    }
-}
-?>
-
-
 
 </body>
 </html>
