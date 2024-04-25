@@ -125,7 +125,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="profile.html">
+                    <a href="profile.php">
                       <span class="icon"><i class="fas fa-solid fa-paw"></i></span>
                       <span class="list">Animal Profiles</span>
                     </a>
