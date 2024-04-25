@@ -20,7 +20,7 @@
 
                     <!-- DISPLAY ANIMAL PROFILES -->
                     <a href="animal_individual_profile.php?petID=<?=$row["petID"]?>" class="alb">
-                        <img src="uploads/<?=$row["image_url"]?>">
+                        <img src="<?=$row["image_url"]?>">
                         <h3><strong>Name:</strong><?=$row["name"]?> </h3>
                     </a>
 
