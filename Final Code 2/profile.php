@@ -209,7 +209,7 @@
                                 <td class="breed"><?=$row["breed"]?></td>
                                 <td class="name"><?=$row["name"]?> </td>
                                 <td class="description"><?=$row["description"]?> </td>
-                                <td><img src="uploads/<?=$row["image_url"]?>"></td>
+                                <td><img src="<?=$row["image_url"]?>"></td>
                                 <td>
                                     <button class="delete-button">Delete</button>
                                     <button class="modify-button">Modify</button>
