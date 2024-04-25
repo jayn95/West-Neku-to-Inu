@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2024 at 02:25 PM
+-- Generation Time: Apr 25, 2024 at 03:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -97,12 +97,13 @@ CREATE TABLE `animalprofiles` (
 --
 
 INSERT INTO `animalprofiles` (`petID`, `name`, `breed`, `description`, `routeLink`, `image_url`, `reactions`) VALUES
-(16, 'Yam', 'dog', 'joo', 'ROUTE-661e01f4408a15.37803009.png', 'IMG-661e01f440b3e2.54824886.jpg', 0),
-(17, 'katy', 'maine coon', 'Fiesty!', 'ROUTE-661e0230e2b8b7.92851362.png', 'IMG-661e0230e2e951.02939581.jpg', 0),
-(18, 'Mimi', 'Maltese', 'Cutieee!', 'ROUTE-661e025ee967f9.25156317.png', 'IMG-661e025ee9c7f3.17813975.jpg', 0),
-(19, 'Riri', 'Husky', 'Like a wolf!', 'ROUTE-661e314015e2b4.81418807.png', 'IMG-661e3140162d22.78553741.jpg', 0),
-(21, 'Pido', 'Aspin', 'Favorite ka Taga-West! (PS: Image may not reflect the the actual person or animal.)', 'ROUTE-661e4132eadc06.02573548.png', 'IMG-661e4132eb1400.79743027.png', 0),
-(23, 'Whiskers', 'Cat', 'Whiskers is a playful and friendly tabby cat who loves to cuddle.', '', 'cat.jpg', 0);
+(16, 'Yam', 'dog', 'joo', 'ROUTE-661e01f4408a15.37803009.png', 'uploads/IMG-661e01f440b3e2.54824886.jpg', 0),
+(17, 'katy', 'maine coon', 'Fiesty!', 'ROUTE-661e0230e2b8b7.92851362.png', 'uploads/IMG-661e0230e2e951.02939581.jpg', 0),
+(18, 'Mimi', 'Maltese', 'Cutieee!', 'ROUTE-661e025ee967f9.25156317.png', 'uploads/IMG-661e025ee9c7f3.17813975.jpg', 0),
+(19, 'Riri', 'Husky', 'Like a wolf!', 'ROUTE-661e314015e2b4.81418807.png', 'uploads/IMG-661e3140162d22.78553741.jpg', 0),
+(21, 'Pido', 'Aspin', 'Favorite ka Taga-West! (PS: Image may not reflect the the actual person or animal.)', 'ROUTE-661e4132eadc06.02573548.png', 'uploads/IMG-661e4132eb1400.79743027.png', 0),
+(23, 'Whiskers', 'Cat', 'Whiskers is a playful and friendly tabby cat who loves to cuddle.', '', 'uploads/cat.jpg', 0),
+(29, 'Merry ', 'Puppy', '- ', '', 'uploads/IMG-662a3a865ecca9.88868313.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -307,7 +308,7 @@ ALTER TABLE `admin_permission`
 -- AUTO_INCREMENT for table `animalprofiles`
 --
 ALTER TABLE `animalprofiles`
-  MODIFY `petID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `petID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `forum_subject`
