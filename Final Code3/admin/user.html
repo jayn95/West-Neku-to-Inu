@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Approval</title>
+    <link rel="stylesheet" href="design/admin.css">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".hamburger").click(function(){
+                $(".wrapper").toggleClass("active")
+            })
+        });
+
+        function approveUser(row) {
+            // Perform approval logic here
+            // For demonstration purposes, let's just hide the buttons and keep the row
+            $(row).find(".approve-btn, .reject-btn").remove();
+        }
+
+        function rejectUser(row) {
+            // Perform rejection logic here
+            // For demonstration purposes, let's just remove the row from the table
+            $(row).remove();
+        }
+    </script>
+</head>
+<body>
+
+<div class="wrapper">
+
+    <div class="top_navbar">
+        <div class="logo">
+            <a href="#">West Neko to Inu</a>
+        </div>
+        <div class="top_menu">
+            <div class="right_info">
+                <div class="icon_wrap">
+                    <div class="icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                </div>
+                <div class="icon_wrap">
+                    <div class="icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main_body">
+        
+        <div class="sidebar_menu">
+            <div class="inner__sidebar_menu">
+                
+                <ul>
+                    <li>
+                        <a href="admin.html">
+                            <span class="icon">
+                                <i class="fas fa-border-all"></i>
+                            </span>
+                            <span class="list">Main</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><i class="fas fa-chart-pie"></i></span>
+                            <span class="list">Charts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="animal.php">
+                            <span class="icon"><i class="fas fa-file-invoice"></i></span>
+                            <span class="list">Animal Submissions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="user.html" class="active">
+                            <span class="icon"><i class="fas fa-duotone fa-users"></i></span>
+                            <span class="list">User Approval</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.php">
+                            <span class="icon"><i class="fas fa-solid fa-paw"></i></span>
+                            <span class="list">Animal Profiles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="posts.php">
+                            <span class="icon"><i class="fas fa-solid fa-pen"></i></span>
+                            <span class="list">Content</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="hamburger">
+                    <div class="inner_hamburger">
+                        <span class="arrow">
+                            <i class="fas fa-long-arrow-alt-left"></i>
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="user_approval_container">
+            <div class="item_wrap">
+                <div class="item">
+                    <h2>User Approval and Deletion</h2>
+                    <div class="scrollable-table">
+                        <table id="userTable">
+                            <thead>
+                                <tr>
+                                    <th><h3>Username</h3></th>
+                                    <th><h3>First Name</h3></th>
+                                    <th><h3>Last Name</h3></th>
+                                    <th><h3>Email</h3></th>
+                                    <th><h3>Password</h3></th>
+                                    <th><h3>Actions</h3></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>john_doe</td>
+                                    <td>John</td>
+                                    <td>Doe</td>
+                                    <td>john.doe@example.com</td>
+                                    <td>********</td>
+                                    <td>
+                                        <button class="approve_btn" onclick="approveUser(this.parentNode.parentNode)">Approve</button>
+                                        <button class="reject_btn" onclick="rejectUser(this.parentNode.parentNode)">Reject</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>jane_smith</td>
+                                    <td>Jane</td>
+                                    <td>Smith</td>
+                                    <td>jane.smith@example.com</td>
+                                    <td>********</td>
+                                    <td>
+                                        <button class="approve_btn" onclick="approveUser(this.parentNode.parentNode)">Approve</button>
+                                        <button class="reject_btn" onclick="rejectUser(this.parentNode.parentNode)">Reject</button>
+                                    </td>
+                                </tr>
+                                <!-- Additional user entries can be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+</body>
+</html>
