@@ -1,7 +1,3 @@
-<?php
-include "admin_header.php";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
