@@ -33,8 +33,5 @@
             <input type="text" id="password" name="password" required><br><br>
             <input type="submit" name="submit" value="Sign In"> 
         </form>
-        <div class="login-reference">
-            <p>Already have an account? <a href="user_login.php">Login here</a></p>
-        </div>
     </body>
 </html>
