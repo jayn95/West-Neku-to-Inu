@@ -60,7 +60,7 @@ if(isset($_GET['petID'])) {
                     <div class="animalProfile">
                         <div class="animalImage">
                             <div class="image-container">
-                                <img src="../<?=$row["image_url"]?>">
+                                <img src="<?=$row["image_url"]?>">
                                 <div class="heart-btn"  data-petid="<?=$petID?>">
                                     <div class="content">
                                         <span class="heart"></span>
