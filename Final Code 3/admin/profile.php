@@ -28,18 +28,19 @@
         });
 
         // Function to handle edit button click
-
-        function editRow() {
-            // Show the form for modifying profiles
-            document.getElementById("modify_profile_form").style.display = "block";
+        function editRow(petID) {
+            document.getElementById('petID').value = petID; // Set the petID value in the hidden input field
+            document.getElementById('profile_form').style.display = 'block'; // Display the form
         }
 
         // Function to handle cancel edit
-        function cancelEdit() {
-        $('#profile_form').hide();
-        $('#save_btn').text('Submit');
-        $('#row_index').val('');
+        function cancelAdd() {
+            document.getElementById('profile_form').style.display = 'none';
         }
+
+        // function cancelEdit() {
+        //     document.getElementById('modify_profile_form').style.display = 'none';
+        // }
 
         // Function to handle adding new profile
         function addNewProfile() {
@@ -50,7 +51,6 @@
         $('#row_index').val('');
         }
 
-        // Function to handle saving data
         function saveData() {
             var name = document.getElementById("name").value;
             var breed = document.getElementById("breed").value;
@@ -64,6 +64,9 @@
             formData.append("description", description);
             formData.append("profile_pic", profilePic);
 
+            // Hide the form
+            document.getElementById("profile_form").style.display = "none";
+
             // AJAX request to send form data to PHP
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "profile_script.php", true);
@@ -71,7 +74,38 @@
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // Response from PHP
                     console.log(xhr.responseText);
-                    // You can handle the response here, e.g., show a success message
+                    console.log("Record created successfully");
+                }
+            };
+            xhr.send(formData);
+        }
+
+        function modifyData() {
+            var petID = document.getElementById("petID").value;
+            var name = document.getElementById("name").value;
+            var breed = document.getElementById("breed").value;
+            var description = document.getElementById("description").value;
+            var profilePic = document.getElementById("profile_pic").files[0];
+
+            // Form data object to send to PHP
+            var formData = new FormData();
+            formData.append("petID", petID);
+            formData.append("name", name);
+            formData.append("breed", breed);
+            formData.append("description", description);
+            formData.append("profile_pic", profilePic);
+
+            // Hide the form
+            document.getElementById("profile_form").style.display = "none";
+
+            // AJAX request to send form data to PHP
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "save_profile_script.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Response from PHP
+                    console.log(xhr.responseText);
+                    console.log("Record modified successfully");
                 }
             };
             xhr.send(formData);
@@ -79,7 +113,7 @@
 
         // Function to handle seeing posts
         function seePosts(row) {
-        window.location.href = "posts.php";
+            window.location.href = "posts.php";
         }
   </script>
   <style>
@@ -134,7 +168,7 @@
                       </div>
                       <div class="dropdown-content">
                           <a href="admin_profile.php">View Profile</a>
-                          <a href="#">Log Out</a>
+                          <a href="logout.php">Log Out</a>
                       </div>
                   </div>
                 </div>
@@ -222,13 +256,13 @@
                         <div class="alb">
                             <tr>
                             <td class="petID"><?=$row["petID"]?></td>
-                            <td class="breed"><?=$row["breed"]?></td>
                             <td class="name"><?=$row["name"]?> </td>
+                            <td class="breed"><?=$row["breed"]?></td>
                             <td class="description"><?=$row["description"]?> </td>
-                            <td><img src="../<?=$row["image_url"]?>"></td>
+                            <td><img src="<?=$row["image_url"]?>"></td>
                             <td>
                                 <button class="reject_btn">Delete</button>
-                                <button class="approve_btn" onclick="editRow()">Modify</button>
+                                <button class="approve_btn" onclick="editRow(<?= $row['petID'] ?>)">Modify</button>
                             </td>
                             </tr>
                         </div>
@@ -238,8 +272,8 @@
             </table>
             <!-- add new profile -->
             <button class="add-profile-button" onclick="addNewProfile()">Add New Profile</button>
-            <form id="profile_form" style="display: none;">
-                <input type="hidden" id="row_index" value="">
+            <form id="profile_form">
+                <input type="hidden" id="petID" name="petID" value="">
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name" required><br><br>
                 
@@ -253,33 +287,8 @@
                 <input type="file" id="profile_pic" name="profile_pic" accept="image/*" required><br><br>
                 
                 <button class="submit-button" type="button" id="save_btn" onclick="saveData()">Save</button>
-                <button class="cancel-button" type="button" onclick="cancelEdit()">Cancel</button>
-            </form>
-
-            <!-- redirected to edit data -->
-            <form id="modify_profile_form" style="display: none;"
-                method="post"
-                action="save_profile_script.php"
-                enctype="multipart/form-data">
-                <input type="hidden" id="row_index" value="">
-
-                <br>
-                <label for="title">Modify Animal Profile</label><br>
-
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name" required><br><br>
-                
-                <label for="breed">Breed:</label><br>
-                <input type="text" id="breed" name="breed" required><br><br>
-                
-                <label for="description">Description:</label><br>
-                <textarea id="description" name="description" rows="4" required></textarea><br><br>
-                
-                <label for="profile_pic">Profile Picture:</label><br>
-                <input type="file" id="profile_pic" name="profile_pic" accept="image/*" required><br><br>
-                
-                <input type="submit" name="submit" value="Save">
-                <button class="cancel-button" type="button" onclick="cancelEdit()">Cancel</button>
+                <button class="submit-button" type="button" id="modify_btn" onclick="modifyData()">Modify</button>
+                <button class="cancel-button" type="button" onclick="cancelAdd()">Cancel</button>
             </form>
         </div>
     </div>
