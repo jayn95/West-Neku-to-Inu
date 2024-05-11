@@ -1,60 +1,64 @@
+<?php
+$username = $err_msg = "";
+
+include "cfg/db_conn.php";
+include "cfg/header.php";
+
+if (isset($_POST['user_login'])) {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    $sql = "SELECT * from adminaccount where username = ? and password_hash = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("ss", $username, $password);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['image_prof'] = $row['image_prof'];
+            header("location:admin.php");
+            exit; // Add exit to prevent further execution
+        } else {
+            $err_msg = "Invalid username/password";
+        }
+    } else {
+        $err_msg = "Some error occurred";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Login</title>
     <link rel="stylesheet" href="../design/design.css">
 </head>
 <body>
-    <!-- NAVIGATION BAR -->
-    <?php include "cfg/header.php"; ?>
-    
     <!-- ADMIN LOGIN -->
     <div class="container">
         <div class="header">
-            <h2>Login</h2>
+            <h2>User Login</h2>
         </div>
-        <form method="post" action="admin.php">
+        <?php if (!empty($err_msg)): ?>
+            <div class="error"><?php echo $err_msg; ?></div>
+        <?php endif; ?>
+        <form method="post" action="admin_login.php">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username">
+                <input type="text" name="username" placeholder="Enter your Username" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" name="password">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn" name="login_user">Login</button>
+                <button type="submit" class="btn" name="user_login">Login</button>
             </div>
         </form>
     </div>
-
-<?php
-
-include('cfg/server.php');
-
-if (isset($_POST['login_user'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $query = "SELECT * FROM adminaccount WHERE username='$username'";
-    $result = $db->query($query);
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['username'] = $username;
-            header('Location: admin.php');
-            exit();
-        } else {
-            array_push($errors, "Wrong username or password");
-        }
-    } else {
-        array_push($errors, "Wrong username or password");
-    }
-}
-?>
 
 </body>
 </html>
