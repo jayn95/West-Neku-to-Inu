@@ -3,32 +3,31 @@ $username = $err_msg = "";
 
 include "../cfg/db_conn.php";
 include "header.php";
-if (isset($_POST['user_login'])){
+
+if (isset($_POST['user_login'])) {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-    // $password = md5($_POST['password']);
 
     $sql = "SELECT * from user_account where username = ? and password = ?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
-      if( $stmt->execute() ){
+    if ($stmt->execute()) {
         $result = $stmt->get_result();
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $_SESSION['username'] = $row['username'];
             $_SESSION['image_prof'] = $row['image_prof'];
             header("location:animal_view_profile.php");
-
-        }
-        else {
+            exit; // Add exit to prevent further execution
+        } else {
             $err_msg = "Invalid username/password";
         }
-    }
-    else {
-        $err_msg = "Some error occurred"; 
+    } else {
+        $err_msg = "Some error occurred";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,11 +42,13 @@ if (isset($_POST['user_login'])){
         <div class="header">
             <h2>User Login</h2>
         </div>
+        <?php if (!empty($err_msg)): ?>
+            <div class="error"><?php echo $err_msg; ?></div>
+        <?php endif; ?>
         <form method="post" action="user_login.php">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username"
-                placeholder = "Enter you Username" required>
+                <input type="text" name="username" placeholder="Enter your Username" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
