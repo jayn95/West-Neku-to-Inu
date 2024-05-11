@@ -118,11 +118,6 @@
                     <div class="pic-container">
                         <img src="<?=$row["picture"]?>" alt="Post Image">
                     </div>
-                    <div class="content" onclick="toggleHeart(this)">
-                        <span class="heart"></span>
-                        <span class="text">Like</span>
-                        <span class="numb" id="LikeCount"></span> 
-                    </div>
                     <a href="forumpageredirect2.php?content_id=<?php echo $row['content_id']; ?>">View Comments</a>
                 </div>
                 <?php
