@@ -40,7 +40,7 @@ if (isset($_POST['user_login'])) {
     <!-- ADMIN LOGIN -->
     <div class="container">
         <div class="header">
-            <h2>User Login</h2>
+            <h2>Admin Login</h2>
         </div>
         <?php if (!empty($err_msg)): ?>
             <div class="error"><?php echo $err_msg; ?></div>
