@@ -2,7 +2,6 @@
 $username = $err_msg = "";
 
 include "../cfg/db_conn.php";
-include "header.php";
 
 if (isset($_POST['user_login'])) {
     $username = trim($_POST['username']);
@@ -27,14 +26,19 @@ if (isset($_POST['user_login'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../design/design.css">
+    <link rel="stylesheet" href="../design/user_login_design.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- ADMIN LOGIN -->
@@ -47,18 +51,18 @@ if (isset($_POST['user_login'])) {
         <?php endif; ?>
         <form method="post" action="user_login.php">
             <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" placeholder="Enter your Username" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your Username" required>
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your Password" required>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn" name="user_login">Login</button>
             </div>
         </form>
+        </div>
     </div>
-
 </body>
 </html>
