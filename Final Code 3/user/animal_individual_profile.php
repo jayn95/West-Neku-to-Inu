@@ -3,26 +3,14 @@
 include "header.php";
 include "../cfg/db_conn.php";
 
-// Check if petID is provided in the URL
-if(isset($_GET['petID'])) {
-    // Sanitize the input to prevent SQL injection
-    $petID = mysqli_real_escape_string($db, $_GET['petID']);
-    
-    // Query to fetch detailed information of the particular animal
-    $sql = "SELECT * FROM animalprofiles WHERE petID = $petID";
-    $result = mysqli_query($db, $sql);
-    
-    // Check if the query was successful
-    if($result && mysqli_num_rows($result) > 0) {
-        // Fetch the data
-        $row = mysqli_fetch_assoc($result);}
-        // Display the details
-
 // Function to get initial like count for a petID
 function getInitialLikeCount($db, $petID) {
-    $sql = "SELECT COUNT(*) as totalLikes FROM reactions WHERE petID = $petID";
-    $result = mysqli_query($db, $sql);
-    $row = mysqli_fetch_assoc($result);
+    $sql = "SELECT COUNT(*) as totalLikes FROM reactions WHERE petID = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $petID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
     return $row['totalLikes'];
 }
 
@@ -32,60 +20,66 @@ if(isset($_GET['petID'])) {
     $petID = mysqli_real_escape_string($db, $_GET['petID']);
     
     // Query to fetch detailed information of the particular animal
-    $sql = "SELECT * FROM animalprofiles WHERE petID = $petID";
-    $result = mysqli_query($db, $sql);
+    $sql = "SELECT * FROM animalprofiles WHERE petID = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('i', $petID);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     // Check if the query was successful
-    if($result && mysqli_num_rows($result) > 0) {
+    if($result && $result->num_rows > 0) {
         // Fetch the data
-        $row = mysqli_fetch_assoc($result);
+        $row = $result->fetch_assoc();
         // Get initial like count
         $initialLikeCount = getInitialLikeCount($db, $petID);
-?>
+        ?>
 
         <!DOCTYPE html>
         <html>
-            <head>
-                <meta charset="UTF-8">
-                <title>Animal Details</title>
-                <link rel="stylesheet" href="../design/design.css">
-                <link rel="stylesheet" href="../design/animal_profile.css">
-                <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
-            </head>
-            <body>
-                <!-- ANIMAL DETAILS -->
-                <div class="animalDetails">
-                    <h2>Animal Details</h2>
-                    <div class="animalProfile">
-                        <div class="animalImage">
-                            <div class="image-container">
-                                <img src="<?=$row["image_url"]?>">
-                                <div class="heart-btn"  data-petid="<?=$petID?>">
-                                    <div class="content">
-                                        <span class="heart"></span>
-                                        <span class="text">Like</span>
-                                        <span class="numb" id="LikeCount">
-                                            <?php
-                                            echo $initialLikeCount; 
-                                            ?>
-                                        </span>
-                                    </div>
+        <head>
+            <meta charset="UTF-8">
+            <title>Animal Details</title>
+            <link rel="stylesheet" href="../design/design.css">
+            <link rel="stylesheet" href="../design/animal_profile.css">
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+        </head>
+        <body>
+            <div class="whole">
+            <div class="animalDetails">
+                <h2>Animal Details</h2>
+                <div class="animalProfile">
+                    <div class="animalImage">
+                        <div class="image-container">
+                            <img src="<?=$row["image_url"]?>" alt="Animal Image">
+                            <div class="heart-btn" data-petid="<?=$petID?>">
+                                <div class="content">
+                                    <span class="heart"></span>
+                                    <span class="text">Like</span>
+                                    <span class="numb" id="LikeCount">
+                                        <?=$initialLikeCount?>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="animalInfo">
-                            <br></br>
-                            <h3><strong>Name:</strong> <?=$row["name"]?> </h3>
-                            <p><strong>Breed:</strong> <?=$row["breed"]?></p>
-                            <p><strong>Description:</strong> <?=$row["description"]?> </p>
-                        </div>
+                    </div>
+                    <div class="animalInfo">
+                        <h3><strong>Name:</strong> <?=$row["name"]?></h3>
+                        <p><strong>Breed:</strong> <?=$row["breed"]?></p>
+                        <p><strong>Description:</strong> <?=$row["description"]?></p>
                     </div>
                 </div>
+            </div>
+            </div>
 
-                <script>
+            <script>
+                $(document).ready(function() {
                     // Click event for heart react button
-                    $('.heart-btn').click(function() {
+                    $('.heart-btn').on('click', function() {
                         var petID = $(this).data('petid');
                         var userID = <?php echo isset($_SESSION['userID']) ? $_SESSION['userID'] : 'null'; ?>;
                         var likeCount = parseInt($('#LikeCount').text());
@@ -96,21 +90,17 @@ if(isset($_GET['petID'])) {
                             url: 'like_handler.php',
                             data: { userID: userID, petID: petID, liked: !liked },
                             success: function(response) {
-                                if(response == 'liked') {
+                                if(response === 'liked') {
                                     // If the button was not liked, add the like
                                     if (!liked) {
                                         $(this).addClass("heart-active");
                                         $('#LikeCount').text(likeCount + 1);
-                                        // Increment like count
-                                        likeCount++;
                                     }
-                                } else if(response == 'unliked') {
+                                } else if(response === 'unliked') {
                                     // If the button was liked, remove the like
                                     if (liked) {
                                         $(this).removeClass("heart-active");
                                         $('#LikeCount').text(likeCount - 1);
-                                        // Decrement like count
-                                        likeCount--;
                                     }
                                 }
                             }.bind(this), // Ensure the proper context for 'this'
@@ -121,16 +111,14 @@ if(isset($_GET['petID'])) {
                         });
                     });
 
-                    // Click event for heart react button
-                    $('.content').click(function() {
-                        $(this).toggleClass("heart-active")
-                        $('.text').toggleClass("heart-active")
-                        $('.numb').toggleClass("heart-active")
-                        $('.heart').toggleClass("heart-active")
+                    // Toggle classes for heart animation
+                    $('.content').on('click', function() {
+                        $(this).toggleClass("heart-active");
+                        $('.text, .numb, .heart').toggleClass("heart-active");
                     });
-                </script>
-
-            </body>
+                });
+            </script>
+        </body>
         </html>
         <?php
     } else {
@@ -140,5 +128,5 @@ if(isset($_GET['petID'])) {
 } else {
     // petID is not provided in the URL
     echo "Invalid request!";
-}}
+}
 ?>
