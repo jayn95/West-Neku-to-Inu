@@ -1,75 +1,40 @@
 <?php include "../cfg/db_conn.php";?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Animal Profiles</title>
-        <!-- <link rel="stylesheet" href="design/design.css"> -->
-        <style>
-            /* Gallery */
-            .alb {
-                margin: 20px;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                background-color: #f9f9f9;
-                float: left;
-                width: calc(33.33% - 40px); /* Adjust the width of each item */
-                box-sizing: border-box;
-            }
-
-            .alb img {
-                display: block;
-                width: 100%;
-                height: 100px; /* Set a fixed height */
-                object-fit: cover; /* Maintain aspect ratio */
-                border-radius: 5px;
-                margin-bottom: 10px;
-            }
-
-            .alb h3 {
-                margin: 0;
-                font-size: 18px;
-            }
-
-            .alb p {
-                margin: 0;
-                margin-bottom: 10px;
-                font-size: 14px;
-            }
-
-            .clearfix::after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-            h2 {
-                font-size: 24px;
-                color: #333;
-                margin-bottom: 20px;
-            }
-            </style>
+        <link rel="stylesheet" href="../design/profiles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <!-- NAVIGATION BAR -->
         <?php include "header.php"; ?>
         
         <h2>Pet Profiles</h2>
-        <div class="clearfix">
+        <div class="profile-container">
             <?php
                 $sql = "SELECT * FROM animalprofiles ORDER BY petID DESC";
                 $res = mysqli_query($db, $sql);
 
-                if (mysqli_num_rows($res) > 0) {
+                if ($res && mysqli_num_rows($res) > 0) {
                     while ($row = mysqli_fetch_assoc($res)) { ?>
 
                     <!-- DISPLAY ANIMAL PROFILES -->
-                    <a href="animal_individual_profile.php?petID=<?=$row["petID"]?>" class="alb">
-                        <img src="<?=$row["image_url"]?>">
-                        <h3><strong>Name:</strong><?=$row["name"]?> </h3>
+                    <a href="animal_individual_profile.php?petID=<?= htmlspecialchars($row['petID']) ?>" class="profile-card">
+                        <img src="<?= htmlspecialchars($row['image_url']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
+                        <h2><?= htmlspecialchars($row['name']) ?></h2>
+                        <h3><?= htmlspecialchars($row['breed']) ?></h3>
                     </a>
 
-            <?php  } }?>
+            <?php  } 
+                } else {
+                    echo "<p>No profiles found.</p>";
+                }
+            ?>
         </div>
     </body>
 </html>
