@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile 1</title>
+    <link rel="stylesheet" href="design.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: url('C:/Users/Patrick Joseph/Documents/West-Neku-to-Inu-Pt-2-main/West-Neku-to-Inu-Pt-2-main/assets/profbg.svg');
+            background-size: cover; 
+        }
+
+        .whole {
+            padding-top: 75px;
+        }
+        .back-to-profile {
+            position: fixed;
+            top: 80px;
+            left: 280px;
+            z-index: 999;
+            cursor: pointer;
+            transition: left 0.3s ease;
+            width: 80px;
+            height: 80px;
+        }
+        .back-to-profile img{
+            width: 100%;
+            height: auto;
+        }
+
+        .back-to-profile:hover {
+            width: 6%;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="assets/HOUSE.gif">
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="animal_profile.html">Animals</a>
+            <a href="#">About Us</a>
+        </nav>
+    </header>
+
+    <a href="animal_profile.html" class="back-to-profile">
+        <img src="">
+    </a>
+
+    <div class="whole">
+        <div class="tabs"></div>
+            <div class="tab">About Me</div>
+            <div class="tab">My Story</div>
+        </div>
+        
+        <div class="animalDetails">
+            <img src="assets/pet1.png" alt="animal_image">
+            <h2>Looney</h2>
+            <h3>Japanese Spitz</h3>
+        </div>
+        
+        <div class="aboutPet"> 
+        </div>
+    </div>
+    
+    <script>
+         // Toggle classes for heart animation
+         $('.content').on('click', function() {
+            $(this).toggleClass("heart-active");
+            $('.text, .numb, .heart').toggleClass("heart-active");
+        });
+    </script>
+</body>
+</html>
